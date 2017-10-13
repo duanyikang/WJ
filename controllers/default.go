@@ -91,13 +91,20 @@ func (main *MainController) Login() {
 }
 
 /**
-上传头像
+接收上传头像
  */
-func (main *MainController) UploadImag() {
-	f, h, err := main.GetFile("img")
+func (this *MainController) UploadImag() {
+
+	f, h, err := this.GetFile("img")
 	if err != nil {
 		log.Fatal("getfile err ", err)
 	}
 	defer f.Close()
-	main.SaveToFile("uploadname", "static/upload/"+h.Filename)
+	e := this.SaveToFile("img", "static/upload/"+h.Filename)
+	if e != nil {
+		this.Ctx.WriteString(e.Error())
+	} else {
+		this.Ctx.WriteString("OK")
+	}
+
 }
