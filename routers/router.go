@@ -1,7 +1,7 @@
 package routers
 
 import (
-	"wj/controllers"
+	"WJ/controllers"
 	"github.com/astaxie/beego"
 )
 

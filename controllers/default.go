@@ -2,7 +2,7 @@ package controllers
 
 import (
 	"github.com/astaxie/beego"
-	"wj/models"
+	"WJ/models"
 	"github.com/astaxie/beego/orm"
 	_"encoding/json"
 	_ "github.com/go-sql-driver/mysql"

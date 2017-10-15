@@ -1,7 +1,7 @@
 package main
 
 import (
-	_ "wj/routers"
+	_ "WJ/routers"
 	"github.com/astaxie/beego"
 )
 
