@@ -10,5 +10,6 @@ func init() {
 	beego.Router("/login.dgg",&controllers.MainController{},"post:Login")
 	beego.Router("/register.dgg",&controllers.MainController{},"post:Register")
 	beego.Router("/upload.dgg",&controllers.MainController{},"post:UploadImag")
+	beego.Router("/download.dgg",&controllers.MainController{},"get:DownLoadApk")
 }
 

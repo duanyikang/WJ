@@ -8,6 +8,7 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 	"encoding/json"
 	"log"
+
 )
 
 type MainController struct {
@@ -32,9 +33,6 @@ func (c *MainController) Post() {
 
 }
 
-/**
-检索所有用户
- */
 func (main *MainController) SelectAllUser() {
 
 	main.TplName = "index.html"
@@ -52,8 +50,7 @@ func (main *MainController) Register() {
 	useravatar := main.Input().Get("avatar")
 	usertitle := main.Input().Get("title")
 	userfriend := main.Input().Get("friend")
-	usertime := main.Input().Get("passwd")
-	user, err := models.Register(userphone, userpasswd, username, usersex, useravatar, usertitle, userfriend, usertime)
+	user, err := models.Register(userphone, userpasswd, username, usersex, useravatar, usertitle, userfriend)
 	if err != nil {
 		main.Ctx.WriteString("注册失败:" + err.Error())
 	} else {
@@ -83,16 +80,28 @@ func (main *MainController) Login() {
  */
 func (this *MainController) UploadImag() {
 
-	f, h, err := this.GetFile("img")
+	f, _, err := this.GetFile("img")
+	userphone := this.Input().Get("phone")
+
 	if err != nil {
 		log.Fatal("getfile err ", err)
 	}
 	defer f.Close()
-	e := this.SaveToFile("img", "static/upload/"+h.Filename)
+
+
+	e := this.SaveToFile("img", "static/upload/"+userphone+".png")
 	if e != nil {
 		this.Ctx.WriteString(e.Error())
 	} else {
+		models.UploadUserAvatar(userphone, userphone+".png")
 		this.Ctx.WriteString("OK")
 	}
 
+}
+
+/**
+下载APK
+ */
+func (this *MainController) DownLoadApk() {
+	this.Ctx.Output.Download("static/apk/zhansha_v1.0.2.3.apk")
 }

@@ -8,5 +8,6 @@ import (
 
 
 func main() {
+	beego.SetStaticPath("/pic","static/upload")
 	beego.Run()
 }

@@ -3,6 +3,7 @@ package models
 import (
 	"github.com/astaxie/beego/orm"
 	"errors"
+	"time"
 )
 
 type Userinfo struct {
@@ -47,7 +48,7 @@ func Login(userPhone, userPasswd string) (user1 Userinfo, err error) {
 /**
 注册
  */
-func Register(userPhone, userPassswd, userName, userSex, userAvatar, userTitle, userFriend, userTime string) (user Userinfo, err error) {
+func Register(userPhone, userPassswd, userName, userSex, userAvatar, userTitle, userFriend string) (user Userinfo, err error) {
 	dbObj := orm.NewOrm()
 	dbObj.Using("default")
 
@@ -58,9 +59,19 @@ func Register(userPhone, userPassswd, userName, userSex, userAvatar, userTitle, 
 	user.UserAvatar = userAvatar
 	user.UserTitle = userTitle
 	user.UserFriend = userFriend
-	user.UserTime = userTime
-
+	t := time.Now().Unix()
+	tm := time.Unix(t, 0)
+	user.UserTime = tm.Format("2006-01-01")
 	_, err = dbObj.Insert(&user)
+	return user, err
+}
+
+func UploadUserAvatar(userPhone, userAvatar string) (user Userinfo, err error) {
+	dbObj := orm.NewOrm()
+	dbObj.Using("default")
+
+	_, err = dbObj.QueryTable("userinfo").Filter("user_phone", userPhone).Limit(1).Update(orm.Params{"user_avatar": userAvatar})
+	err = dbObj.QueryTable("userinfo").Filter("user_phone", userPhone).Limit(1).One(&user)
 
 	return user, err
 }
