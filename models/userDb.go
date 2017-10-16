@@ -53,7 +53,7 @@ func Register(userPhone, userPassswd, userName, userSex, userAvatar, userTitle, 
 	dbObj.Using("default")
 
 	user.UserPhone = userPhone
-	user.UserPasswd = userPhone
+	user.UserPasswd = userPassswd
 	user.UserName = userName
 	user.UserSex = userSex
 	user.UserAvatar = userAvatar
