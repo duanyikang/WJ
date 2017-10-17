@@ -8,7 +8,6 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 	"encoding/json"
 	"log"
-
 )
 
 type MainController struct {
@@ -51,11 +50,15 @@ func (main *MainController) Register() {
 	usertitle := main.Input().Get("title")
 	userfriend := main.Input().Get("friend")
 	user, err := models.Register(userphone, userpasswd, username, usersex, useravatar, usertitle, userfriend)
+
 	if err != nil {
-		main.Ctx.WriteString("注册失败:" + err.Error())
+		responsebean2 := models.ResponseBean{2, "注册失败", err.Error()}
+		str, _ := json.Marshal(responsebean2)
+		main.Ctx.WriteString(string(str))
 	} else {
-		b, _ := json.Marshal(user)
-		main.Ctx.WriteString("注册成功:" + string(b))
+		responsebean1 := models.ResponseBean{1, "注册成功", user}
+		str, _ := json.Marshal(responsebean1)
+		main.Ctx.WriteString(string(str))
 	}
 }
 
@@ -68,10 +71,13 @@ func (main *MainController) Login() {
 	user, err := models.Login(userphone, userpasswd)
 
 	if err != nil {
-		main.Ctx.WriteString("登陆失败:" + err.Error())
+		responsebean2 := models.ResponseBean{2, "登陆失败", err.Error()}
+		str, _ := json.Marshal(responsebean2)
+		main.Ctx.WriteString(string(str))
 	} else {
-		b, _ := json.Marshal(user)
-		main.Ctx.WriteString("登陆成功:" + string(b))
+		responsebean1 := models.ResponseBean{1, "登陆成功", user}
+		str, _ := json.Marshal(responsebean1)
+		main.Ctx.WriteString(string(str))
 	}
 }
 
@@ -87,7 +93,6 @@ func (this *MainController) UploadImag() {
 		log.Fatal("getfile err ", err)
 	}
 	defer f.Close()
-
 
 	e := this.SaveToFile("img", "static/upload/"+userphone+".png")
 	if e != nil {
