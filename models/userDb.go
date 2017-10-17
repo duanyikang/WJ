@@ -7,15 +7,15 @@ import (
 )
 
 type Userinfo struct {
-	Id         int    `pk:"auto"`
-	UserPhone  string   `orm:"size(255)"`
-	UserPasswd string `orm:"size(255)"`
-	UserName   string `orm:"size(255)"`
-	UserSex    string `orm:"size(20)"`
-	UserAvatar string `orm:"size(255)"`
-	UserTitle  string `orm:size(255)`
-	UserFriend string `orm:size(20)`
-	UserTime   string `orm:"size(255)"`
+	Id         int    `pk:"auto" json:"id"`
+	UserPhone  string   `orm:"size(255)" json:"userPhone"`
+	UserPasswd string `orm:"size(255)" json:"userPasswd"`
+	UserName   string `orm:"size(255)" json:"userName"`
+	UserSex    string `orm:"size(20)" json:"userSex"`
+	UserAvatar string `orm:"size(255)" json:"userAvatar"`
+	UserTitle  string `orm:size(255) json:"userTitle"`
+	UserFriend string `orm:size(20) json:"userFriend"`
+	UserTime   string `orm:"size(255)" json:"userTime"`
 }
 
 func init() {
