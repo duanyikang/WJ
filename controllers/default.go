@@ -4,7 +4,7 @@ import (
 	"github.com/astaxie/beego"
 	"WJ/models"
 	"github.com/astaxie/beego/orm"
-	_"encoding/json"
+	_ "encoding/json"
 	_ "github.com/go-sql-driver/mysql"
 	"encoding/json"
 	"log"
@@ -34,8 +34,15 @@ func (c *MainController) Post() {
 }
 
 func (main *MainController) SelectAllUser() {
+	key := main.GetString("key")
+	if (len(key)<2){
+		main.TplName = "index.html"
+		return 
+	}
 
-	main.TplName = "index.html"
+	str := models.Search(key)
+	main.Ctx.WriteString(str)
+
 }
 
 /**
@@ -108,11 +115,10 @@ func (this *MainController) UploadImag() {
 func (this *MainController) AllRecord() {
 	userphone := this.Input().Get("phone")
 
+	records, err := models.SelectRecord(userphone)
+	if err != nil {
 
-	records,err:=models.SelectRecord(userphone)
-	if err!=nil{
-
-	}else {
+	} else {
 		responsebean1 := models.ResponseBean{1, "上传成功", records}
 		str, _ := json.Marshal(responsebean1)
 		this.Ctx.WriteString(string(str))
