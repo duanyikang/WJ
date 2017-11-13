@@ -37,7 +37,7 @@ func (main *MainController) SelectAllUser() {
 	key := main.GetString("key")
 	if (len(key)<2){
 		main.TplName = "index.html"
-		return 
+		return
 	}
 
 	str := models.Search(key)
