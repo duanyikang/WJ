@@ -24,10 +24,15 @@
 
 
         <form>
-            需要翻译的单词:
-            <input type="text" name="key">
-            <input type="submit" value="翻译">
+            <textarea name="key" placeholder="输入你要翻译的内容"
+                      style="width:300px;height:50px;background:black;color:darkgreen;"></textarea>
+
+            <input type="submit" value="翻译" style="width:100px;height:50px;background:black;color:white;">
         </form>
+
+    {{ .s}}
+
+
     </div>
 </header>
 
