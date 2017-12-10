@@ -11,14 +11,6 @@
     <link rel="stylesheet" href="/static/css/animate.min.css"/>
     <link rel="stylesheet" href="/static/css/ionicons.min.css"/>
     <link rel="stylesheet" href="/static/css/styles.css"/>
-    <style>
-.form_input{
-    width: 200px;
-    height: 200px;
-
-}
-
-    </style>
 </head>
 <body>
 <header id="first">
@@ -32,10 +24,15 @@
 
 
         <form>
-            需要翻译的单词:
-            <input type="text" name="key" class="form_input">
-            <input type="submit" value="翻译">
+            <textarea name="key" placeholder="输入你要翻译的内容"
+                      style="width:300px;height:50px;background:black;color:darkgreen;"></textarea>
+
+            <input type="submit" value="翻译" style="width:100px;height:50px;background:black;color:white;">
         </form>
+
+    {{ .s}}
+
+
     </div>
 </header>
 

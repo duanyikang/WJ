@@ -41,7 +41,10 @@ func (main *MainController) SelectAllUser() {
 	}
 
 	str := models.Search(key)
-	main.Ctx.WriteString(str)
+
+	main.Data["s"]=str
+	main.TplName = "index.html"
+
 
 }
 

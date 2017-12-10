@@ -9,6 +9,16 @@ import (
 	"crypto/md5"
 )
 
+type SearchResult struct {
+	Web []string `json:"web"`
+
+}
+
+type Web struct {
+	value []string `json:"value"`
+	key   string   `json:"key"`
+}
+
 func Search(words string) (value string) {
 	data := make(url.Values)
 	data["q"] = []string{words}
