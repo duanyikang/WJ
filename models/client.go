@@ -9,28 +9,26 @@ import (
 )
 
 var quitSemaphore chan bool
-var conn *net.TCPConn
-
-func ClientSendMsg() {
-
-}
+var msg="231231231231"
 
 func ClientStart() {
 	var tcpAddr *net.TCPAddr
-	tcpAddr, _ = net.ResolveTCPAddr("tcp", "127.0.0.1:9999")
-	conn, _ = net.DialTCP("tcp", nil, tcpAddr) //开启连接
+	tcpAddr, _ = net.ResolveTCPAddr("tcp", "47.95.200.181:9999")
+	conn, _ := net.DialTCP("tcp", nil, tcpAddr) //开启连接
 	defer conn.Close()                         //关闭连接
 	fmt.Println("Connected!")
 	go onMessageRecived(conn) //接收消息
+	go sendMessage(conn)
 	<-quitSemaphore
 }
 
-func ClientSendmsg(msg string) {
-	go sendMessage(conn, msg)
+func ClientSendmsg(data string) {
+	msg=data;
+	fmt.Println(msg)
 }
 
 // 发送消息
-func sendMessage(conn *net.TCPConn, msg string) {
+func sendMessage(conn *net.TCPConn) {
 	//发送消息
 	for {
 		time.Sleep(1 * time.Second)
@@ -43,6 +41,7 @@ func sendMessage(conn *net.TCPConn, msg string) {
 		//处理加密
 		b, _ := codec.Encode(msg + "\n")
 		conn.Write(b)
+		msg="231231231231"
 	}
 }
 
@@ -51,7 +50,7 @@ func onMessageRecived(conn *net.TCPConn) {
 	for {
 		//解密
 		msg, err := codec.Decode(reader) //reader.ReadString('\n')
-		fmt.Println(msg)
+		fmt.Println("客户端收到的消息：",msg)
 		if err != nil {
 			quitSemaphore <- true
 			break

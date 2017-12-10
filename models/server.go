@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net"
 	"WJ/models/codec"
+	"strings"
 )
 
 // 用来记录所有的客户端连接
@@ -13,11 +14,12 @@ var ConnMap map[string]*net.TCPConn
 func StartLonglink()  {
 	var tcpAddr *net.TCPAddr
 	ConnMap = make(map[string]*net.TCPConn) //初始化
-	tcpAddr,_=net.ResolveTCPAddr("tcp","127.0.0.1:9999")
+	tcpAddr,_=net.ResolveTCPAddr("tcp","47.95.200.181:9999")
 
 	tcpListener,_:=net.ListenTCP("tcp",tcpAddr) //开启tcp 服务
 	//退出时关闭
 	defer tcpListener.Close()
+	fmt.Println("Long server start  ")
 	for{
 		tcpConn,err :=tcpListener.AcceptTCP()
 		if err !=nil {
@@ -44,9 +46,14 @@ func tcpPipe(conn *net.TCPConn)  {
 	for {
 		message ,err :=codec.Decode(reader)//reader.ReadString('\n')
 		if err != nil {
+			fmt.Println(err.Error())
 			return
 		}
-		fmt.Println(string(message))
+
+		if(strings.Contains(message,"231231231231")){
+			continue
+		}
+		fmt.Println("服务端收到的消息：",msg)
 		//这里返回消息改为广播
 		boradcastMessage(conn.RemoteAddr().String()+":"+string(message))
 	}

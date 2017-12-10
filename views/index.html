@@ -24,11 +24,13 @@
 
 
         <form>
-            <textarea name="key" placeholder="输入你要翻译的内容"
+            <textarea name="key" placeholder="发送消息到服务器"
                       style="width:300px;height:50px;background:black;color:darkgreen;"></textarea>
 
             <input type="submit" value="翻译" style="width:100px;height:50px;background:black;color:white;">
         </form>
+
+        <input type="button" value="去聊天室看看" onclick="location.href='http://localhost:8080/chat.dgg'" style="width:100px;height:50px;background:black;color:white;">
 
     {{ .s}}
 

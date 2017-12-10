@@ -6,7 +6,9 @@ import (
 )
 
 func init() {
-	beego.Router("/", &controllers.MainController{}, "get:SelectAllUser")
+	beego.Router("/", &controllers.MainController{}, "get:Translation")
+	beego.Router("/chat.dgg", &controllers.MainController{}, "get:Chat")
+	beego.Router("/chat.dgg/", &controllers.MainController{}, "get:ChatSend")
 	beego.Router("/login.dgg", &controllers.MainController{}, "post:Login")
 	beego.Router("/register.dgg", &controllers.MainController{}, "post:Register")
 	beego.Router("/upload.dgg", &controllers.MainController{}, "post:UploadImag")

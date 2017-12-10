@@ -9,7 +9,8 @@ import (
 
 
 func main() {
+go 	 models.StartLonglink()
 	beego.SetStaticPath("/pic","static/upload")
 	beego.Run()
-	models.StartLonglink()
+
 }

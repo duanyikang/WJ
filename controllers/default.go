@@ -22,30 +22,45 @@ func init() {
 	orm.RunSyncdb("default", false, true)
 }
 
-func (c *MainController) Get() {
-	c.Data["Website"] = "beego.me"
-	c.Data["Email"] = "astaxie@gmail.com"
-	c.TplName = "index.html"
-
-}
-
-func (c *MainController) Post() {
-
-}
-
-func (main *MainController) SelectAllUser() {
+/**
+翻译
+ */
+func (main *MainController) Translation() {
 	key := main.GetString("key")
-	if (len(key)<2){
+	if (len(key) < 2) {
 		main.TplName = "index.html"
 		return
 	}
 
 	str := models.Search(key)
 
-	main.Data["s"]=str
+	main.Data["s"] = str
 	main.TplName = "index.html"
+}
 
+func (main *MainController) Chat() {
 
+	key := main.GetString("key")
+	if (len(key) < 2) {
+		go models.ClientStart()
+		main.TplName = "chat.html"
+		return
+	}
+	go models.ClientSendmsg(key)
+	main.Data["s"] = "可以啦？"
+	main.TplName = "chat.html"
+}
+
+func (main *MainController) ChatSend() {
+	key := main.GetString("key")
+	if (len(key) < 2) {
+		main.TplName = "index.html"
+		return
+	}
+
+	go models.ClientSendmsg(key)
+	main.Data["s"] = key
+	main.TplName = "index.html"
 }
 
 /**
