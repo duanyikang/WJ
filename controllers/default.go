@@ -41,27 +41,17 @@ func (main *MainController) Translation() {
 func (main *MainController) Chat() {
 
 	key := main.GetString("key")
-	if (len(key) < 2) {
+	if (len(key) < 1) {
 		go models.ClientStart()
 		main.TplName = "chat.html"
 		return
 	}
 	go models.ClientSendmsg(key)
-	main.Data["s"] = "可以啦？"
+
+	main.Data["s"] = models.GetMessge()
 	main.TplName = "chat.html"
 }
 
-func (main *MainController) ChatSend() {
-	key := main.GetString("key")
-	if (len(key) < 2) {
-		main.TplName = "index.html"
-		return
-	}
-
-	go models.ClientSendmsg(key)
-	main.Data["s"] = key
-	main.TplName = "index.html"
-}
 
 /**
 注册

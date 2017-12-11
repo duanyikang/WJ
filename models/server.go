@@ -6,6 +6,7 @@ import (
 	"net"
 	"WJ/models/codec"
 	"strings"
+	"WJ/src/github.com/astaxie/beego"
 )
 
 // 用来记录所有的客户端连接
@@ -14,7 +15,7 @@ var ConnMap map[string]*net.TCPConn
 func StartLonglink()  {
 	var tcpAddr *net.TCPAddr
 	ConnMap = make(map[string]*net.TCPConn) //初始化
-	tcpAddr,_=net.ResolveTCPAddr("tcp","47.95.200.181:9999")
+	tcpAddr,_=net.ResolveTCPAddr("tcp",beego.AppConfig.String("longdir"))
 
 	tcpListener,_:=net.ListenTCP("tcp",tcpAddr) //开启tcp 服务
 	//退出时关闭
@@ -53,7 +54,7 @@ func tcpPipe(conn *net.TCPConn)  {
 		if(strings.Contains(message,"231231231231")){
 			continue
 		}
-		fmt.Println("服务端收到的消息：",msg)
+		fmt.Println("服务端收到的消息：",message)
 		//这里返回消息改为广播
 		boradcastMessage(conn.RemoteAddr().String()+":"+string(message))
 	}
